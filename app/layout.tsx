@@ -32,7 +32,7 @@ export default function RootLayout({
 
 const Nav = ({ children }: any) => {
   return (
-    <h1 className={`py-3 border-b-2`}>
+    <h1 className={`py-3 border-b-2 mb-4`}>
       <div className="flex items-center justify-between">{children}</div>
     </h1>
   );

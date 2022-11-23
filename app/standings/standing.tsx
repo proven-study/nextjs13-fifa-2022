@@ -1,6 +1,7 @@
 import React from "react";
+import TeamRow from "./team-row";
 
-interface Team {
+export interface Team {
   team_id: String;
   mp: String;
   w: String;
@@ -22,8 +23,6 @@ interface StandingProps {
 }
 
 const Standing = ({ id, group, teams }: StandingProps) => {
-  console.log("teams", teams);
-  
   return (
     <div className="p-4 rounded-lg shadow bg-gray-50">
       <div className="grid grid-cols-7 text-xs">
@@ -34,6 +33,17 @@ const Standing = ({ id, group, teams }: StandingProps) => {
         <p className="mx-auto">Draw</p>
         <p className="mx-auto">Points</p>
       </div>
+
+      <hr className="my-2" />
+
+      {/* {teams?.map((team) => (
+        <TeamRow key={team.team_id} team={team} />
+      ))} */}
+      {teams
+        ?.sort((a: any, b: any) => b.pts - a.pts)
+        .map((team) => (
+          <TeamRow key={team.team_id} team={team} />
+        ))}
     </div>
   );
 };

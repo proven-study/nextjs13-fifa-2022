@@ -1,9 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div>
-      <H1>FIFA 2022 World Cup</H1>
+    <div className='flex flex-col items-center space-y-8'>
+        <Image
+        src='/assets/2022_FIFA_World_Cup.svg'
+        alt='FIFA WC 2022'
+        height={200}
+        width={400}
+      />
+      {/* <H1>FIFA 2022 World Cup</H1> */}
       {/* <H1 hasHover>FIFA 2022 World Cup</H1>
       <h1>FIFA 2022 World Cup</h1> */}
       <Btn>Standings</Btn>

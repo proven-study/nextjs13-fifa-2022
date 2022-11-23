@@ -52,7 +52,7 @@ const Standings = async (
     <div>
       {standings?.status === "error" && <p>{standings?.message}</p>}
       {standings?.status === "success" && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 mx-2 sm:grid-cols-2">
           {standings?.data?.map(({ _id, group, teams }: any) => (
             <Standing key={_id} id={_id} group={group} teams={teams} />
           ))}
