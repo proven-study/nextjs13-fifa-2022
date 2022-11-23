@@ -4,8 +4,8 @@ export default function Home() {
   return (
     <div>
       <H1>FIFA 2022 World Cup</H1>
-      <H1 hasHover>FIFA 2022 World Cup</H1>
-      <h1>FIFA 2022 World Cup</h1>
+      {/* <H1 hasHover>FIFA 2022 World Cup</H1>
+      <h1>FIFA 2022 World Cup</h1> */}
       <Btn>Standings</Btn>
     </div>
   );

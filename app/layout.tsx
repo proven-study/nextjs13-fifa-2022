@@ -30,8 +30,10 @@ export default function RootLayout({
   );
 }
 
-const Nav = ({ children }: any) => (
-  <h1 className={`py-3 border-b-2`}>
-    <div className="flex items-center justify-between">{children}</div>
-  </h1>
-);
+const Nav = ({ children }: any) => {
+  return (
+    <h1 className={`py-3 border-b-2`}>
+      <div className="flex items-center justify-between">{children}</div>
+    </h1>
+  );
+};
