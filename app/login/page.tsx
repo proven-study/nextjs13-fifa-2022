@@ -1,7 +1,61 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { API_URL } from "../../utils/api";
+
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+const loginAsync = async (reqData: LoginData) => {
+  // const res = await fetch(`${API_URL}/user/login`, {
+  const res = await fetch(`/server/user/login`, {
+    method: "POST",
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+    body: JSON.stringify(reqData),
+  });
+
+  const data = await res.json();
+
+  console.log("data", data);
+
+  if (data?.error?.length > 0) {
+    return {
+      status: "error",
+      message: data?.error,
+      data: null,
+    };
+  } else {
+    return {
+      status: "success",
+      message: null,
+      data: data.data,
+    };
+  }
+};
 
 const Login = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const reqData = {
+      email: emailRef.current?.value || "",
+      password: passwordRef.current?.value || "",
+    };
+
+    const loginData = await loginAsync(reqData);
+
+    console.log(loginData);
+  };
+
   return (
     <section className="h-screen">
       <div className="h-full px-6 text-gray-800">
@@ -16,7 +70,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-12 xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 md:mb-0">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-row items-center justify-center mb-5">
                 <h1 className="text-2xl font-bold">Login</h1>
               </div>
@@ -24,9 +78,9 @@ const Login = () => {
               {/* Email input */}
               <div className="mb-6">
                 <input
+                  ref={emailRef}
                   type="text"
                   className="block w-full px-4 py-2 m-0 text-lg font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleFormControlInput2"
                   placeholder="Email address"
                 />
               </div>
@@ -34,9 +88,9 @@ const Login = () => {
               {/* Password input */}
               <div className="mb-6">
                 <input
+                  ref={passwordRef}
                   type="password"
                   className="block w-full px-4 py-2 m-0 text-lg font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  id="exampleFormControlInput2"
                   placeholder="Password"
                 />
               </div>
@@ -62,7 +116,8 @@ const Login = () => {
 
               <div className="text-center lg:text-left">
                 <button
-                  type="button"
+                  // type="button"
+                  type="submit"
                   className="inline-block py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-blue-600 rounded shadow-md px-7 hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg"
                 >
                   Login
