@@ -3,7 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+// import Router from 'next/router'
+import { useRouter } from 'next/navigation';
 import { API_URL } from "../../utils/api";
+import runApi from "run-api";
 
 interface LoginData {
   email: string;
@@ -12,15 +15,29 @@ interface LoginData {
 
 const loginAsync = async (reqData: LoginData) => {
   // const res = await fetch(`${API_URL}/user/login`, {
-  const res = await fetch(`/server/user/login`, {
-    method: "POST",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
-    body: JSON.stringify(reqData),
-  });
+  //   // const res = await fetch(`/server/user/login`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(reqData),
+  // });
 
-  const data = await res.json();
+  //  const res = await fetch(`http://65.1.169.125:3050/api/v1/cors-resolver?${API_URL}/user/login`, {
+  //   // const res = await fetch(`/server/user/login`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(reqData),
+  // });
+
+  const res = await runApi.post(`${API_URL}/user/login`, reqData);
+  // const res = await runApi.post(`${API_URL}/user/login`, reqData);
+
+  // const data = await res.json();
+  
+  const data = res;
 
   console.log("data", data);
 
@@ -40,6 +57,7 @@ const loginAsync = async (reqData: LoginData) => {
 };
 
 const Login = () => {
+  const router = useRouter();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -54,6 +72,13 @@ const Login = () => {
     const loginData = await loginAsync(reqData);
 
     console.log(loginData);
+
+    if (loginData.status === "success") {
+      // window.location.href = "/standings";
+      // Router.push('/standings')
+      localStorage.setItem("token", JSON.stringify(loginData.data.token));
+      router.push('/standings?token=' + loginData.data.token);
+    }
   };
 
   return (
